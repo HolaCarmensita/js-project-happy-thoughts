@@ -19,7 +19,7 @@ function useFetchThoughts() {
           likes: t.likes,
           createdAt: t.createdAt,
         }));
-        setThoughts((prev) => {
+        setThoughts((prev) => { //Hantera dubletter skapat av lokalt sparade thoughts som sedan hämtas igenfrån backend.
           const onlyUnique = mapped.filter(
             (t) => !prev.some((p) => p.id === t.id)
           );

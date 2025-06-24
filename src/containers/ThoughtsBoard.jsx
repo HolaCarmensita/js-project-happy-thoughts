@@ -1,10 +1,12 @@
 // src/containers/ThoughtsBoard.jsx
+import React from 'react';
 import useFetchThoughts from '../hooks/useFetchThoughts';
 import usePostThought from '../hooks/usePostThought';
 import useLikeThought from '../hooks/useLikeThought';
 import ThoughtForm from '../components/ThoughtForm';
 import ThoughtList from '../components/ThoughtList';
 import { addUniqueSortedThought } from '../utils/thoughtUtils';
+import { useNavigate } from 'react-router-dom';
 
 export default function ThoughtsBoard() {
   const {
@@ -44,8 +46,42 @@ export default function ThoughtsBoard() {
     );
   });
 
+  const navigate = useNavigate();
+  const isLoggedIn = Boolean(localStorage.getItem('token'));
+
+  const handleAuthClick = () => {
+    if (isLoggedIn) {
+      localStorage.removeItem('token');
+      window.location.reload();
+    } else {
+      navigate('/login');
+    }
+  };
+
   return (
     <>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginBottom: '1rem',
+        }}
+      >
+        <button
+          onClick={handleAuthClick}
+          style={{
+            padding: '0.5rem 1.2rem',
+            background: '#ffadad',
+            color: '#222',
+            border: 'none',
+            borderRadius: '4px',
+            fontSize: '1rem',
+            cursor: 'pointer',
+          }}
+        >
+          {isLoggedIn ? 'Logout' : 'Login'}
+        </button>
+      </div>
       <ThoughtForm
         onNewThought={sendThought}
         disabled={posting}

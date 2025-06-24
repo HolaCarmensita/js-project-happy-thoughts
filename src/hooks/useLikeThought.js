@@ -6,10 +6,15 @@ function useLikeThought(onSuccess) {
   const [liking, setLiking] = useState(false);
 
   const like = (id) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Please log in to like a thought.');
+      return;
+    }
     setLiking(true);
     setError(null);
 
-    PostLikeThought(id)
+    PostLikeThought(id, token)
       .then((t) => {
         const mapped = {
           id: t._id,

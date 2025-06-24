@@ -75,8 +75,8 @@ function ThoughtCard({ id, message, likes, createdAt, onLike, liking, error }) {
   const date = new Date(createdAt);
 
   const displayTime = isToday(date)
-    ? `Today ${format(date, 'h:mm a')}` // t.ex. “Today 12:30 PM”
-    : formatDistanceToNow(date, { addSuffix: true }); // t.ex. “2 days ago”
+    ? `Today ${format(date, 'h:mm a')}` // t.ex. "Today 12:30 PM"
+    : formatDistanceToNow(date, { addSuffix: true }); // t.ex. "2 days ago"
 
   return (
     <Card>
@@ -91,7 +91,7 @@ function ThoughtCard({ id, message, likes, createdAt, onLike, liking, error }) {
         </CardLike>
         <CardTime>{displayTime}</CardTime>
       </CardContent>
-      {/* {error && <ErrorMsg>Gilla misslyckades</ErrorMsg>} */}
+      {error && <ErrorMsg>{error}</ErrorMsg>}
     </Card>
   );
 }
