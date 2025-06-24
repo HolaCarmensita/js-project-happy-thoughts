@@ -3,16 +3,19 @@ import { useState } from 'react';
 
 function useLikeThought(onSuccess) {
   const [error, setError] = useState(null);
+  const [errorId, setErrorId] = useState(null);
   const [liking, setLiking] = useState(false);
 
   const like = (id) => {
     const token = localStorage.getItem('token');
     if (!token) {
       setError('Please log in to like a thought.');
+      setErrorId(id);
       return;
     }
     setLiking(true);
     setError(null);
+    setErrorId(null);
 
     PostLikeThought(id, token)
       .then((t) => {
@@ -24,11 +27,14 @@ function useLikeThought(onSuccess) {
         };
         onSuccess(mapped);
       })
-      .catch((err) => setError(err.message))
+      .catch((err) => {
+        setError(err.message);
+        setErrorId(id);
+      })
       .finally(() => setLiking(false));
   };
 
-  return { like, loading: liking, error };
+  return { like, loading: liking, error, errorId };
 }
 
 export default useLikeThought;

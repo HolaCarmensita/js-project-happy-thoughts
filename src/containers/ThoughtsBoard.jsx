@@ -31,6 +31,7 @@ export default function ThoughtsBoard() {
     like,
     loading: liking,
     error: likeError,
+    errorId: likeErrorId,
   } = useLikeThought((updatedThought) => {
     // // 🧪 Fakes error för ett specifikt id:
     // if (updatedThought.id === '684828c66c268fe1534fb6c0') {
@@ -85,7 +86,7 @@ export default function ThoughtsBoard() {
       <ThoughtForm
         onNewThought={sendThought}
         disabled={posting}
-        error={postError && 'Could not post, please try again'}
+        error={postError}
       />
 
       {loading && <p>Loading…</p>}
@@ -100,6 +101,7 @@ export default function ThoughtsBoard() {
           onLike={like}
           liking={liking}
           likeError={likeError}
+          likeErrorId={likeErrorId}
         />
       )}
 
