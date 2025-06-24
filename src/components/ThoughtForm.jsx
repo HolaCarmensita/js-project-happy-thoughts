@@ -63,32 +63,53 @@ const ErrorMsg = styled.p`
   animation: ${appear} 0.3s ease-out;
 `;
 
+const CharCounter = styled.div`
+  align-self: flex-end;
+  font-size: 0.95rem;
+  color: ${({ $overLimit }) => ($overLimit ? '#d32f2f' : '#888')};
+  font-weight: ${({ $overLimit }) => ($overLimit ? 'bold' : 'normal')};
+  margin-bottom: -0.5rem;
+`;
+
 function ThoughtForm({ onNewThought, disabled, error }) {
   const [input, setInput] = useState('');
+  const [localError, setLocalError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!input.trim()) return; //Om meddelandet är tomt gör inget för tillfället
+    if (!input.trim()) return;
+    if (input.trim().length < 5 || input.trim().length > 140) {
+      setLocalError('The thought must be between 5 and 140 characters');
+      return;
+    }
+    setLocalError('');
     onNewThought(input.trim());
     setInput('');
   };
 
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+    if (localError) setLocalError('');
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
-      <FormLabel>What’s making you happy right now?</FormLabel>
+      <FormLabel>What's making you happy right now?</FormLabel>
 
       <Textarea
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={handleInputChange}
         placeholder='Share a happy thought...'
       ></Textarea>
+      <CharCounter $overLimit={input.length > 140}>
+        {input.length} / 140
+      </CharCounter>
       <Button type='submit' disabled={disabled}>
-        {/* {disabled ? 'Sending…' : 'Send'} */}
         <img src='/heart.png' alt='heart emoji' />
         Send Happy Thought
         <img src='/heart.png' alt='heart emoji' />
       </Button>
-      {error && <ErrorMsg>{error}</ErrorMsg>}
+      {(localError || error) && <ErrorMsg>{localError || error}</ErrorMsg>}
     </Form>
   );
 }

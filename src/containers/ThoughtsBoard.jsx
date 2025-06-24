@@ -29,7 +29,7 @@ export default function ThoughtsBoard() {
 
   const {
     like,
-    loading: liking,
+    likingId,
     error: likeError,
     errorId: likeErrorId,
   } = useLikeThought((updatedThought) => {
@@ -99,7 +99,7 @@ export default function ThoughtsBoard() {
         <ThoughtList
           thoughts={thoughts}
           onLike={like}
-          liking={liking}
+          likingId={likingId}
           likeError={likeError}
           likeErrorId={likeErrorId}
         />

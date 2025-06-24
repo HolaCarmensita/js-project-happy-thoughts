@@ -4,7 +4,7 @@ import { useState } from 'react';
 function useLikeThought(onSuccess) {
   const [error, setError] = useState(null);
   const [errorId, setErrorId] = useState(null);
-  const [liking, setLiking] = useState(false);
+  const [likingId, setLikingId] = useState(null);
 
   const like = (id) => {
     const token = localStorage.getItem('token');
@@ -13,7 +13,7 @@ function useLikeThought(onSuccess) {
       setErrorId(id);
       return;
     }
-    setLiking(true);
+    setLikingId(id);
     setError(null);
     setErrorId(null);
 
@@ -31,10 +31,10 @@ function useLikeThought(onSuccess) {
         setError(err.message);
         setErrorId(id);
       })
-      .finally(() => setLiking(false));
+      .finally(() => setLikingId(null));
   };
 
-  return { like, loading: liking, error, errorId };
+  return { like, likingId, error, errorId };
 }
 
 export default useLikeThought;

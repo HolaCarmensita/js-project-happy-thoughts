@@ -12,7 +12,7 @@ const ListWrapper = styled.div`
   }
 `;
 
-function ThoughtList({ thoughts, onLike, liking, likeError, likeErrorId }) {
+function ThoughtList({ thoughts, onLike, likingId, likeError, likeErrorId }) {
   return (
     <ListWrapper>
       {thoughts.map(({ id, message, likes, createdAt }) => (
@@ -23,7 +23,7 @@ function ThoughtList({ thoughts, onLike, liking, likeError, likeErrorId }) {
           likes={likes}
           createdAt={createdAt}
           onLike={onLike}
-          liking={liking}
+          liking={likingId === id}
           error={likeErrorId === id ? likeError : null}
         />
       ))}

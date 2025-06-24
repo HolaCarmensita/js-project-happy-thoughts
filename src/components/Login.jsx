@@ -68,8 +68,8 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const { token } = await loginUser(email, password);
-      localStorage.setItem('token', token);
+      const { accessToken } = await loginUser(email, password);
+      localStorage.setItem('token', accessToken);
       navigate('/');
     } catch {
       setError('Invalid email or password');
