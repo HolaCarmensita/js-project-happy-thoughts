@@ -3,6 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import ThoughtsBoard from './containers/ThoughtsBoard';
 import Login from './components/Login';
 import About from './components/About';
+import Register from './components/Register';
 
 const AppWrapper = styled.div`
   max-width: 700px;
@@ -40,6 +41,7 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<ThoughtsBoard />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/about' element={<About />} />
         </Routes>
         <Footer>

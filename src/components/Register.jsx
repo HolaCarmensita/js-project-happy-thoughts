@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { loginUser } from '../api/auth';
+import { registerUser } from '../api/auth';
 
-const LoginWrapper = styled.div`
+const RegisterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
 `;
 
-const LoginForm = styled.form`
+const RegisterForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -44,20 +44,7 @@ const ErrorMsg = styled.div`
   margin-top: 0.5rem;
 `;
 
-const GuestLink = styled(Link)`
-  display: block;
-  margin-top: 1rem;
-  text-align: center;
-  color: #6c63ff;
-  text-decoration: underline;
-  font-size: 1rem;
-  cursor: pointer;
-  &:hover {
-    color: #4834d4;
-  }
-`;
-
-const RegisterLink = styled(Link)`
+const LoginLink = styled(Link)`
   display: block;
   margin-top: 0.5rem;
   text-align: center;
@@ -70,17 +57,9 @@ const RegisterLink = styled(Link)`
   }
 `;
 
-const OrSeparator = styled.div`
-  text-align: center;
-  color: #888;
-  margin: 0.5rem 0;
-  font-size: 1rem;
-`;
-
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -88,18 +67,18 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const { accessToken } = await loginUser(email, password);
+      const { accessToken } = await registerUser(email, password);
       localStorage.setItem('token', accessToken);
       navigate('/');
     } catch {
-      setError('Invalid email or password');
+      setError('Registration failed. Please try again.');
     }
   };
 
   return (
-    <LoginWrapper>
-      <h2>Login</h2>
-      <LoginForm onSubmit={handleSubmit}>
+    <RegisterWrapper>
+      <h2>Sign Up</h2>
+      <RegisterForm onSubmit={handleSubmit}>
         <Input
           type='email'
           placeholder='Email'
@@ -108,28 +87,18 @@ const Login = () => {
           required
         />
         <Input
-          type={showPassword ? 'text' : 'password'}
+          type='password'
           placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <label>
-          <input
-            type='checkbox'
-            checked={showPassword}
-            onChange={(e) => setShowPassword(e.target.checked)}
-          />
-          Show password
-        </label>
-        <Button type='submit'>Login</Button>
+        <Button type='submit'>Sign Up</Button>
         {error && <ErrorMsg>{error}</ErrorMsg>}
-        <GuestLink to='/'>explore HappyThoughts as guest</GuestLink>
-        <OrSeparator>or</OrSeparator>
-        <RegisterLink to='/register'>Sign up</RegisterLink>
-      </LoginForm>
-    </LoginWrapper>
+        <LoginLink to='/login'>Already have an account? Login</LoginLink>
+      </RegisterForm>
+    </RegisterWrapper>
   );
 };
 
-export default Login;
+export default Register;
