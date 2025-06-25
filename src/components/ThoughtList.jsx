@@ -12,7 +12,14 @@ const ListWrapper = styled.div`
   }
 `;
 
-function ThoughtList({ thoughts, onLike, likingId, likeError, likeErrorId }) {
+function ThoughtList({
+  thoughts,
+  onLike,
+  likingId,
+  likeError,
+  likeErrorId,
+  sentinelRef,
+}) {
   return (
     <ListWrapper>
       {thoughts.map(({ id, message, likes, createdAt }) => (
@@ -27,6 +34,8 @@ function ThoughtList({ thoughts, onLike, likingId, likeError, likeErrorId }) {
           error={likeErrorId === id ? likeError : null}
         />
       ))}
+      {/* Sentinel div for infinite scroll */}
+      <div ref={sentinelRef} style={{ height: 1 }} />
     </ListWrapper>
   );
 }

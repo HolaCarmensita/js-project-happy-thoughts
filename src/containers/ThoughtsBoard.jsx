@@ -9,14 +9,12 @@ import { addUniqueSortedThought } from '../utils/thoughtUtils';
 import { useNavigate } from 'react-router-dom';
 
 export default function ThoughtsBoard() {
+  console.log('ThoughtsBoard mounted');
   const {
     thoughts,
     loading,
     error: fetchError,
     setThoughts,
-    page,
-    setPage,
-    totalPages,
   } = useFetchThoughts();
 
   const {
@@ -103,12 +101,6 @@ export default function ThoughtsBoard() {
           likeError={likeError}
           likeErrorId={likeErrorId}
         />
-      )}
-
-      {!loading && page < totalPages && (
-        <button onClick={() => setPage((prev) => prev + 1)}>
-          Visa fler tankar
-        </button>
       )}
     </>
   );
