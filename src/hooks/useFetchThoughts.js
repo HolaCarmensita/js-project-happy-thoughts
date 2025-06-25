@@ -10,7 +10,7 @@ function useFetchThoughts() {
     setLoading(true);
     fetchThoughts()
       .then((data) => {
-        const mapped = data.results.map((t) => ({
+        const mapped = data.map((t) => ({
           id: t._id,
           message: t.message,
           likes: t.likes,
@@ -23,16 +23,10 @@ function useFetchThoughts() {
       .finally(() => setLoading(false));
   }, []);
 
-  //För att kunna ladda om hela listan
-  const reload = () => {
-    setThoughts([]);
-  };
-
   return {
     thoughts,
     loading,
     error,
-    reload,
     setThoughts,
   };
 }
