@@ -7,6 +7,21 @@ import ThoughtForm from '../components/ThoughtForm';
 import ThoughtList from '../components/ThoughtList';
 import { addUniqueSortedThought } from '../utils/thoughtUtils';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+const AuthButton = styled.button`
+  padding: 0.5rem 1.2rem;
+  background: #ffadad;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    background: rgb(198, 91, 91);
+    color: #fff;
+  }
+`;
 
 export default function ThoughtsBoard() {
   console.log('ThoughtsBoard mounted');
@@ -48,6 +63,15 @@ export default function ThoughtsBoard() {
   const navigate = useNavigate();
   const isLoggedIn = Boolean(localStorage.getItem('token'));
 
+  // Get user ID from localStorage (set after login/register)
+  let userId = null;
+  try {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    userId = userData?.id || null;
+  } catch {
+    userId = null;
+  }
+
   const handleAuthClick = () => {
     if (isLoggedIn) {
       localStorage.removeItem('token');
@@ -66,20 +90,9 @@ export default function ThoughtsBoard() {
           marginBottom: '1rem',
         }}
       >
-        <button
-          onClick={handleAuthClick}
-          style={{
-            padding: '0.5rem 1.2rem',
-            background: '#ffadad',
-            color: '#222',
-            border: 'none',
-            borderRadius: '4px',
-            fontSize: '1rem',
-            cursor: 'pointer',
-          }}
-        >
+        <AuthButton onClick={handleAuthClick}>
           {isLoggedIn ? 'Logout' : 'Login'}
-        </button>
+        </AuthButton>
       </div>
       <ThoughtForm
         onNewThought={sendThought}
@@ -100,6 +113,8 @@ export default function ThoughtsBoard() {
           likingId={likingId}
           likeError={likeError}
           likeErrorId={likeErrorId}
+          userId={userId}
+          setThoughts={setThoughts}
         />
       )}
     </>

@@ -42,6 +42,10 @@ const Button = styled.button`
     width: 1.3rem;
     height: auto;
   }
+  &:hover {
+    background: rgb(198, 91, 91);
+    color: #fff;
+  }
 `;
 
 const appear = keyframes`

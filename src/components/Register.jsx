@@ -67,8 +67,9 @@ const Register = () => {
     e.preventDefault();
     setError('');
     try {
-      const { accessToken } = await registerUser(email, password);
+      const { accessToken, id } = await registerUser(email, password);
       localStorage.setItem('token', accessToken);
+      localStorage.setItem('user', JSON.stringify({ id }));
       navigate('/');
     } catch {
       setError('Registration failed. Please try again.');

@@ -28,3 +28,26 @@ export const PostLikeThought = async (id, token) => {
   if (!response.ok) throw new Error('Failed to like thought');
   return response.json();
 };
+
+export const deleteThought = async (id, token) => {
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'DELETE',
+    headers,
+  });
+  if (!response.ok) throw new Error('Failed to delete thought');
+  return response.json();
+};
+
+export const updateThought = async (id, message, token) => {
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify({ message }),
+  });
+  if (!response.ok) throw new Error('Failed to update thought');
+  return response.json();
+};

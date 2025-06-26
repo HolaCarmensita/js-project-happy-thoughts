@@ -15,6 +15,7 @@ function useFetchThoughts() {
           message: t.message,
           likes: t.likes,
           createdAt: t.createdAt,
+          createdBy: t.createdBy,
         }));
         setThoughts(mapped);
         setError(null);

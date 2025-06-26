@@ -1,4 +1,4 @@
-import { postThought } from '../api/thoughts';
+import { postThought, updateThought } from '../api/thoughts';
 import { useState } from 'react';
 
 function usePostThought(onSuccess) {
@@ -19,6 +19,7 @@ function usePostThought(onSuccess) {
           message: t.message,
           likes: t.likes,
           createdAt: new Date(t.createdAt),
+          createdBy: t.createdBy,
         };
         setError(null);
         onSuccess(mapped);
@@ -31,5 +32,27 @@ function usePostThought(onSuccess) {
 
   return { sendThought, loading: posting, error };
 }
+
+export const useEditThought = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const editThought = async (id, message) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem('token');
+      const updated = await updateThought(id, message, token);
+      setLoading(false);
+      return updated;
+    } catch (err) {
+      setError(err.message || 'Failed to update thought');
+      setLoading(false);
+      throw err;
+    }
+  };
+
+  return { editThought, loading, error };
+};
 
 export default usePostThought;

@@ -34,7 +34,7 @@ const Button = styled.button`
   font-size: 1rem;
   cursor: pointer;
   &:hover {
-    background: #ff6f61;
+    background: rgb(198, 91, 91);
     color: #fff;
   }
 `;
@@ -88,8 +88,9 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const { accessToken } = await loginUser(email, password);
+      const { accessToken, id } = await loginUser(email, password);
       localStorage.setItem('token', accessToken);
+      localStorage.setItem('user', JSON.stringify({ id }));
       navigate('/');
     } catch {
       setError('Invalid email or password');
