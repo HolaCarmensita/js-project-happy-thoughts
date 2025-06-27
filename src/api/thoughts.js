@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api/thoughts';
+const API_URL = 'https://hola-happy-server.onrender.com/api/thoughts';
 
 export const fetchThoughts = async () => {
   const response = await fetch(API_URL);
