@@ -1,7 +1,7 @@
-const AUTH_URL = 'http://localhost:8080/login';
+const BASE_URL = 'https://hola-happy-server.onrender.com';
 
 export const loginUser = async (email, password) => {
-  const response = await fetch(AUTH_URL, {
+  const response = await fetch(`${BASE_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
@@ -11,7 +11,7 @@ export const loginUser = async (email, password) => {
 };
 
 export const registerUser = async (email, password) => {
-  const response = await fetch('http://localhost:8080/signup', {
+  const response = await fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
